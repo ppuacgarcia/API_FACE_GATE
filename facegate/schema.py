@@ -1,6 +1,6 @@
 import graphql_jwt
 import graphene
-from users.schema import UserQuery, CreateUserMutation
+from consumers.schema import UserQuery, CreateUserMutation
 class Query(UserQuery,graphene.ObjectType):
     pass
 

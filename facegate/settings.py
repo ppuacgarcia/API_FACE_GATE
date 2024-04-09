@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'graphene_django',
-    'users',
+    'consumers',
 ]
 
 MIDDLEWARE = [
@@ -131,7 +131,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
 # Cambia user por de django por user de person
-AUTH_USER_MODEL = 'users.MyUser'
+AUTH_USER_MODEL = 'consumers.MyUser'
 
 GRAPHENE = {
     "SCHEMA": "core.schema.schema",
