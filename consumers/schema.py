@@ -5,7 +5,7 @@ import graphene
 from django.utils import timezone
 from graphql_jwt.decorators import  permission_required
 from utils.getframe import makeFrames
-
+from utils.training_rf import traning_rf
 #------------------------------- User --------------------------------
 
 class UserType(DjangoObjectType):
@@ -31,7 +31,7 @@ class CreateUserMutation(graphene.Mutation):
         first_name = graphene.String()
         last_name = graphene.String()
         email = graphene.String()
-        videp_path = graphene.String()
+        video_path = graphene.String()
         
     user = graphene.Field(UserType)
     def mutate(self, info, username, email, password, is_superuser=False, is_staff=False, is_active=True, has_module_perms=False, first_name=None, last_name=None, video_path=None):
@@ -43,15 +43,15 @@ class CreateUserMutation(graphene.Mutation):
             is_superuser=is_superuser,
             is_staff=is_staff,
             is_active=is_active,
-            has_module_perms=has_module_perms,
             first_name=first_name,
             last_name=last_name,
             date_joined=timezone.now()
         )
         # esto es solo por si se usa el video
         if video_path:
-            makeFrames(username, './data', video_path)
-        
+            frames_maked= makeFrames(username, './data', video_path)
+        if frames_maked:
+            traning_rf('./data')
         user.set_password(password)
         user.save()
         return CreateUserMutation(user=user)
@@ -71,4 +71,9 @@ class UserQuery(object):
             return None
         except MyUser.DoesNotExist:
             return GraphQLError('No se encontro el usuario')
+        
+class UserMutation(graphene.ObjectType):
+    create_user = CreateUserMutation.Field()
+    update_user = CreateUserMutation.Field()
+    delete_user = CreateUserMutation.Field()
             

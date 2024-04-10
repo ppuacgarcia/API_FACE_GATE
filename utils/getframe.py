@@ -30,7 +30,6 @@ def makeFrames(person_name, data_path, video_path):
             rostro = cv2.resize(rostro,(150,150),interpolation=cv2.INTER_CUBIC)
             cv2.imwrite(person_path + '/rostro_{}.jpg'.format(count),rostro)
             count = count + 1
-        cv2.imshow('frame',frame)
 
         k =  cv2.waitKey(1)
         if k == 27 or count >= 1000:
@@ -38,3 +37,5 @@ def makeFrames(person_name, data_path, video_path):
 
     cap.release()
     cv2.destroyAllWindows()
+    # devuelve true para poder hacer la siguiente parte y confirmar que se hicieron los frames
+    return True
