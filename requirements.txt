@@ -28,6 +28,7 @@ django-appconf==1.0.5
 django-cors-headers==4.3.1
 django-cryptography==1.1
 django-excel-response2==3.0.6
+django-extensions==3.2.3
 django-graphql-jwt==0.4.0
 django-six==1.0.5
 docker==5.0.3
@@ -69,6 +70,7 @@ MarkupSafe==2.0.1
 mock==4.0.3
 monotonic==1.6
 more-itertools==8.10.0
+mysqlclient==2.2.4
 netifaces==0.11.0
 numpy==1.26.4
 oauthlib==3.2.2
