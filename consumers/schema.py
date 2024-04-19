@@ -4,9 +4,7 @@ from graphene_django import DjangoObjectType
 import graphene
 from django.utils import timezone
 from graphql_jwt.decorators import  permission_required
-from utils.get_camera import stream
-from utils.getframe import makeFrames
-from utils.training_rf import traning_rf
+from utils.save_video import VideoCamera
 #------------------------------- User --------------------------------
 
 class UserType(DjangoObjectType):
@@ -49,10 +47,9 @@ class CreateUserMutation(graphene.Mutation):
             date_joined=timezone.now()
         )
         # esto es solo por si se usa el video
-        
-        frames_maked= stream(username)
-        if frames_maked:
-            traning_rf('./data')
+        camara = VideoCamera
+        camara.save_video(username)
+
         user.set_password(password)
         user.save()
         return CreateUserMutation(user=user)
