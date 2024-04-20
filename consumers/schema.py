@@ -5,6 +5,7 @@ import graphene
 from django.utils import timezone
 from graphql_jwt.decorators import  permission_required
 from utils.save_video import VideoCamera
+from utils.recognition import Recognition
 #------------------------------- User --------------------------------
 
 class UserType(DjangoObjectType):
@@ -57,6 +58,10 @@ class CreateUserMutation(graphene.Mutation):
 class UserQuery(object):
     users = graphene.List(UserType)
     user = graphene.Field(UserType, id=graphene.Int())
+    recognize = graphene.Field(graphene.Boolean)
+    def resolve_recognize(self, info, **kwargs):
+        recognize  = Recognition
+        return recognize.face_recognizer('./data')
     
     def resolve_users(self, info, **kwargs):
         return MyUser.objects.all()

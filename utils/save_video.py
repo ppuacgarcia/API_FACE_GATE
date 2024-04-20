@@ -16,10 +16,10 @@ class VideoCamera:
             if not os.path.exists(personPath):
                 print('Carpeta creada: ',personPath)
                 os.makedirs(personPath)
-            url = 'http://192.168.195.19/cam-hi.jpg'
+            url = 'http://192.168.227.19/cam-hi.jpg'
             win_name = 'ESP32 CAMERA'
-            cv2.namedWindow(win_name, cv2.WINDOW_AUTOSIZE)
-            
+            cv2.namedWindow(win_name, cv2.WINDOW_NORMAL)
+            cv2.resizeWindow(win_name, 640, 480)
             # Leer y mostrar los frames del video
             while True:
                 img_response = urllib.request.urlopen(url)  
@@ -33,8 +33,7 @@ class VideoCamera:
                 cv2.imshow(win_name, img) 
                 # Agregar la imagen a la lista de cuadros
                 frames.append(img)
-                MAX_FRAMES = 50
-                print(len(frames))
+                MAX_FRAMES = 110
                 if len(frames) > MAX_FRAMES:
                     break
                 # Esperar hasta que se presione ESC para terminar el programa
@@ -45,7 +44,7 @@ class VideoCamera:
 
             cv2.destroyAllWindows()
             output_file = personPath+'/video_salida.mp4'
-            imageio.mimsave(output_file, frames, fps=20)
+            imageio.mimsave(output_file, frames, fps=1)
             frames = MakeFrames
             frames.makeFrames(username, "./data", output_file)
         except Exception as e:

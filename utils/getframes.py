@@ -42,5 +42,5 @@ class MakeFrames:
         cv2.destroyAllWindows()
         # devuelve true para poder hacer la siguiente parte y confirmar que se hicieron los frames
         train = Training
-        train.training(data_path)
+        train.training(data_path,person_path)
         return "entrenado correctamente"
