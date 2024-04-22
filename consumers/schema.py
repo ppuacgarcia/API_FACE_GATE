@@ -25,7 +25,6 @@ class CreateUserMutation(graphene.Mutation):
         email = graphene.String(required=True)
         password = graphene.String(required=True)
         is_superuser = graphene.Boolean()
-        is_staff = graphene.Boolean()
         is_active = graphene.Boolean()
         has_module_perms = graphene.Boolean()
         first_name = graphene.String()
@@ -34,14 +33,13 @@ class CreateUserMutation(graphene.Mutation):
         video_path = graphene.String()
         
     user = graphene.Field(UserType)
-    def mutate(self, info, username, email, password, is_superuser=False, is_staff=False, is_active=True, has_module_perms=False, first_name=None, last_name=None, video_path=None):
+    def mutate(self, info, username, email, password, is_superuser=False, is_active=True, has_module_perms=False, first_name=None, last_name=None, video_path=None):
         # funcion para crear usuario
         
         user = MyUser(
             username=username,
             email=email,
             is_superuser=is_superuser,
-            is_staff=is_staff,
             is_active=is_active,
             first_name=first_name,
             last_name=last_name,

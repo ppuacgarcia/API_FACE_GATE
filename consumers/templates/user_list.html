@@ -1,0 +1,82 @@
+<!-- user_list.html -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Usuarios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .yes {
+            color: green;
+        }
+
+        .no {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Usuarios</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre de usuario</th>
+                <th>Correo electrónico</th>
+                <th>¿Es superusuario?</th>
+                <th>¿Es miembro del personal?</th>
+                <th>¿Está activo?</th>
+                <th>Fecha de registro</th>
+                <th>Último inicio de sesión</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td class="{% if user.is_superuser %} yes {% else %} no {% endif %}">{% if user.is_superuser %} Sí {% else %} No {% endif %}</td>
+                <td class="{% if user.is_staff %} yes {% else %} no {% endif %}">{% if user.is_staff %} Sí {% else %} No {% endif %}</td>
+                <td class="{% if user.is_active %} yes {% else %} no {% endif %}">{% if user.is_active %} Sí {% else %} No {% endif %}</td>
+                <td>{{ user.date_joined }}</td>
+                <td>{{ user.last_login }}</td>
+                <td>{{ user.first_name }}</td>
+                <td>{{ user.last_name }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+

@@ -2,6 +2,7 @@ import cv2
 import os
 import urllib.request
 import numpy as np
+from django.http import JsonResponse
 class Recognition:
     def face_recognizer(data_path):
         #Cambia a la ruta donde hayas almacenado Data
@@ -34,7 +35,7 @@ class Recognition:
                         cv2.putText(frame,'{}'.format(imagePaths[result[0]]),(x,y-25),2,1.1,(0,255,0),1,cv2.LINE_AA)
                         cv2.rectangle(frame, (x,y),(x+w,y+h),(0,255,0),2)
                         cv2.destroyAllWindows()
-                        return [True, imagePaths[result[0]]]
+                        return JsonResponse({'message': 'Usuario reconocido'})
                         
                     else:
                         
@@ -47,5 +48,6 @@ class Recognition:
                 if k == 27:
                     break
             except Exception as e:
-                return [False, "Usuario desconocido"]   
+                return JsonResponse({'message': 'Usuario reconocido'})  
         cv2.destroyAllWindows()
+        return JsonResponse({'message': 'Usuario reconocido'})  
