@@ -1,10 +1,14 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
+
+from utils.recognition import Recognition
 from .models import MyUser
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from graphql_jwt.decorators import permission_required
 from django.contrib import messages
 import requests
+
 def user_list(request):
     users = MyUser.objects.all()
     return render(request, 'user_list.html', {'users': users})
@@ -66,3 +70,14 @@ def create_user(request):
         # Renderiza el template HTML
         return render(request, 'create_user.html')
 
+def recognize_face(request):
+    try:
+        # Lógica para el reconocimiento facial
+        recognition_result = Recognition.face_recognizer('./data')
+        
+        # Devolver la respuesta JSON con el resultado del reconocimiento
+        return JsonResponse({'message': recognition_result})
+    except Exception as e:
+        # En caso de cualquier error, devolver un mensaje de error
+        return JsonResponse({'error': str(e)}, status=500)
+    
