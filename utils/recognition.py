@@ -35,9 +35,10 @@ class Recognition:
                         cv2.putText(frame,'{}'.format(imagePaths[result[0]]),(x,y-25),2,1.1,(0,255,0),1,cv2.LINE_AA)
                         cv2.rectangle(frame, (x,y),(x+w,y+h),(0,255,0),2)
                         cv2.destroyAllWindows()
-                        return JsonResponse({'message': 'Usuario reconocido'})
+                        return JsonResponse({'message': 'green'})
                         
                     else:
+                        
                         
                         cv2.putText(frame,'Desconocido',(x,y-20),2,0.8,(0,0,255),1,cv2.LINE_AA)
                         cv2.rectangle(frame, (x,y),(x+w,y+h),(0,0,255),2)
@@ -48,6 +49,6 @@ class Recognition:
                 if k == 27:
                     break
             except Exception as e:
-                return JsonResponse({'message': 'Usuario reconocido'})  
+                return JsonResponse({'message': 'red'})  
         cv2.destroyAllWindows()
-        return JsonResponse({'message': 'Usuario reconocido'})  
+        return JsonResponse({'message': 'red'})  

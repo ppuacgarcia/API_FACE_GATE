@@ -72,11 +72,8 @@ def create_user(request):
 
 def recognize_face(request):
     try:
-        # Lógica para el reconocimiento facial
-        recognition_result = Recognition.face_recognizer('./data')
-        
         # Devolver la respuesta JSON con el resultado del reconocimiento
-        return JsonResponse({'message': recognition_result})
+        return Recognition.face_recognizer('./data')
     except Exception as e:
         # En caso de cualquier error, devolver un mensaje de error
         return JsonResponse({'error': str(e)}, status=500)

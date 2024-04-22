@@ -27,5 +27,5 @@ urlpatterns = [
     path('graphql/', jwt_cookie(csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema)))),
     path('usuarios/', user_list, name='user_list.html'),
     path('create-user/', create_user, name='create_user.html'),
-    path('recognize-face/', recognize_face, name='recognize_face'),
+    path('leds/', recognize_face, name='recognize_face'),
 ]
