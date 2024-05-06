@@ -12,7 +12,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from datetime import timedelta
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
+# Carga las variables de entorno desde el archivo .env
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +30,7 @@ SECRET_KEY = 'django-insecure-i#@b6_sx28l2ja7)$oe_qqc=wckty5rr9bq=g@qu#gydfj%ik5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,7 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'graphene_django',
     'consumers',
-    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -51,7 +54,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 ]
 ROOT_URLCONF = 'facegate.urls'
@@ -126,13 +128,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-CORS_ALLOW_ALL_ORIGINS = True
 
-CORS_ALLOWED_ORIGINS = [
-    # Se debe cambiar por la ip del frontend
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-]
+
 # Cambia user por de django por user de person
 AUTH_USER_MODEL = 'consumers.MyUser'
 
@@ -153,11 +150,14 @@ GRAPHQL_JWT = {
     # Otras configuraciones JWT aquí...
 }
 GRAPHQL_JWT_MIDDLEWARE = {
-    'JWT_COOKIE_SECURE': True,  # Asegura que la cookie solo se envíe a través de HTTPS
-    'JWT_REFRESH_TOKEN_COOKIE_SECURE': True,  # Asegura que la cookie de refresco solo se envíe a través de HTTPS
+    'JWT_COOKIE_SECURE': False,  # Desactiva la seguridad de la cookie JWT
+    'JWT_REFRESH_TOKEN_COOKIE_SECURE': False,  # Asegura que la cookie de refresco solo se envíe a través de HTTPS
     # Otras configuraciones relacionadas con cookies JWT aquí...
 }
 
 # Configuración de cookies
-SESSION_COOKIE_SECURE = True  # Asegura que todas las cookies de sesión se envíen solo a través de HTTPS
-CSRF_COOKIE_SECURE = True  # Asegura que la cookie CSRF solo se envíe a través de HTTPS
+SESSION_COOKIE_SECURE = False  # Asegura que todas las cookies de sesión se envíen solo a través de HTTPS
+CSRF_COOKIE_SECURE = False  # Asegura que la cookie CSRF solo se envíe a través de HTTPS
+
+APPEND_SLASH = True
+SECURE_SSL_REDIRECT = False

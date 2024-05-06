@@ -16,6 +16,10 @@ def user_list(request):
 User = get_user_model()
 
 def create_user(request):
+    global create_user_in_use
+
+    create_user_in_use = True
+
     if request.method == 'POST':
         # Recibe los datos del formulario
         username = request.POST.get('username')
@@ -60,21 +64,43 @@ def create_user(request):
         response = requests.post('http://localhost:8000/graphql/', json={'query': mutation})
         # Verifica si la mutación fue exitosa
         if response.status_code == 200:
+            create_user_in_use = False
             data = response.json()
             user_data = data.get('data', {}).get('createUser', {}).get('user', {})
             return redirect('user_list.html')
         else:
+            create_user_in_use = False
             messages.error(request, 'Error al crear el usuario')
             return render(request, 'create_user.html')
     else:
         # Renderiza el template HTML
+        create_user_in_use = False
         return render(request, 'create_user.html')
 
 def recognize_face(request):
-    try:
-        # Devolver la respuesta JSON con el resultado del reconocimiento
-        return Recognition.face_recognizer('./data')
-    except Exception as e:
-        # En caso de cualquier error, devolver un mensaje de error
-        return JsonResponse({'error': str(e)}, status=500)
-    
+    if request.method == 'GET':
+        try:
+            # Devolver la respuesta JSON con el resultado del reconocimiento
+            """if create_user_in_use:
+                return None
+            else:"""
+            return Recognition.face_recognizer('./data')
+        except Exception as e:
+            # En caso de cualquier error, devolver un mensaje de error
+            return JsonResponse({'error': str(e)}, status=500)
+    else:
+        # Si se accede a la vista con un método diferente a GET, devolver un mensaje de error
+        return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+
+def show_leds(request):
+    if request.method == 'GET':
+        try:
+            # Devolver la respuesta JSON con el resultado del reconocimiento
+            return Recognition.show_leds()
+        except Exception as e:
+            # En caso de cualquier error, devolver un mensaje de error
+            return JsonResponse({'error': str(e)}, status=500)
+    else:
+        # Si se accede a la vista con un método diferente a GET, devolver un mensaje de error
+        return JsonResponse({'error': 'Método no permitido'}, status=405)

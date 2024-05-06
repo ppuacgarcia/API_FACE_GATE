@@ -20,12 +20,13 @@ from django.views.decorators.csrf import csrf_exempt
 from graphql_jwt.decorators import jwt_cookie
 from graphene_django.views import GraphQLView
 from facegate.schema import schema
-from consumers.views import recognize_face, user_list, create_user
+from consumers.views import recognize_face, user_list, create_user, show_leds
 from consumers.schema import UserQuery
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('graphql/', jwt_cookie(csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema)))),
     path('usuarios/', user_list, name='user_list.html'),
     path('create-user/', create_user, name='create_user.html'),
-    path('leds/', recognize_face, name='recognize_face'),
+    path('stream/', recognize_face, name='recognize_face'),
+    path('leds/', show_leds, name='show_leds'),
 ]
